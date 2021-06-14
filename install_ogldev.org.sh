@@ -1,11 +1,12 @@
 #!/bin/bash
 clear
-echo 'OpenGl tutorial'
+echo 'OpenGl tutorial for Ubuntu 21, Arch Linux, Void Linux'
 echo
 echo 'I came accross a very good OpenGl tutorial from Etay Meiri: https://ogldev.org/'
 echo 'This file makes the tutorial compatible to your Linux version. I have many Nix packages installed on my system and I hope this script includes everything for plain Distro users.'
 echo 'Due to my old graphics card I get errors at tutorial 50... using vulkan.'
 echo 'Please edit this file before running.'
+echo 'A package manager update is recommended before running this script, i.e. apt update, pacman -Syu, xbps.'
 echo
 printf "To start a compiled tutorial execute this command: "
 printf "\e[31m" #RED
@@ -65,8 +66,8 @@ fi
 if grep -q -wi nixoslinux /proc/version; then
    echo 'Setting up  OGLDEV for Nixos Linux' && echo 'not implemented' && break
 fi 
-if grep -q -wi ubuntulinux /proc/version; then
-   echo 'Setting up  OGLDEV for Ubuntu Linux' && apt install g++ make freeglut3-dev libglew-dev libglew2.1 libmagick++-dev libassimp-dev libglfw3 libglfw3-dev
+if grep -wi Ubuntu /proc/version; then
+   echo 'Setting up  OGLDEV for Ubuntu Linux' && sudo apt install g++ make freeglut3-dev libglew-dev libglew2.1 imagemagick libmagick++-dev libassimp-dev libglfw3 libglfw3-dev
 fi 
 
 #echo "MESA_GL_VERSION_OVERRIDE=3.3" >> /etc/environment # or enter the highest value from previous glxinfo
