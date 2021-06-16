@@ -1,11 +1,11 @@
 #!/bin/bash
 clear
-echo 'OpenGl tutorial for Ubuntu 21, Arch Linux, Void Linux'
+echo 'OpenGl tutorial for Ubuntu Linux, Arch Linux, Void Linux'
 echo
 echo 'I came accross a very good OpenGl tutorial from Etay Meiri: https://ogldev.org/'
 echo 'This file makes the tutorial compatible to your Linux version. I have many Nix packages installed on my system and I hope this script includes everything for plain Distro users.'
-echo 'Due to my old graphics card I get errors at tutorial 50... using vulkan.'
-echo 'Please edit this file before running.'
+echo 'Due to my old graphics card I get errors at tutorial 50... using vulkan. In Ubuntu you might want to use the original install script instead.'
+echo 'Please edit this file as you whish before running.'
 echo 'A package manager update is recommended before running this script, i.e. apt update, pacman -Syu, xbps.'
 echo
 printf "To start a compiled tutorial execute this command: "
@@ -67,9 +67,8 @@ if grep -q -wi nixoslinux /proc/version; then
    echo 'Setting up  OGLDEV for Nixos Linux' && echo 'not implemented' && break
 fi 
 if grep -wi Ubuntu /proc/version; then
-   echo 'Setting up  OGLDEV for Ubuntu Linux' && sudo apt install g++ make freeglut3-dev libglew-dev libglew2.1 imagemagick libmagick++-dev libassimp-dev libglfw3 libglfw3-dev
+   echo 'Setting up  OGLDEV for Ubuntu Linux' && sudo apt install g++ make freeglut3-dev libglew-dev libglew2.1 imagemagick libmagick++-dev libassimp-dev libglfw3 libglfw3-dev mesa-utils
 fi 
-
 #echo "MESA_GL_VERSION_OVERRIDE=3.3" >> /etc/environment # or enter the highest value from previous glxinfo
 #echo "MESA_GLSL_VERSION_OVERRIDE=330" >> /etc/environment
 
@@ -91,13 +90,15 @@ echo
 echo 'Check your glx version before change and after change in the above. Make adjustments in this script and in tutorial-start.sh in each tutorial if desired. Version MESA_GLSL_VERSION_OVERRIDE=330 is required by this tutorial. This default value should work, but is not optimal for other graphical applications.'
 echo
 echo
-echo '*Modifying ./tutorial*/build.sh'
-echo 'Replacing ImageMagick++ with ImageMagick'
-sed -i 's/ImageMagick++/ImageMagick/g' ./tutorial*/build.sh
-echo 'Prepending `Magick++-config --cxxflags --cppflags` to compile command'
-sed -i 's/$CC tutorial/$CC `Magick++-config --cxxflags --cppflags` tutorial/g' ./tutorial*/build.sh
-echo 'Appending `Magick++-config --ldflags --libs` to compile command'
-sed -i '/tutorial.. `/!s/-o tutorial../& `Magick++-config --ldflags --libs`/g' ./tutorial*/build.sh
+if ! grep -wi Ubuntu /proc/version; then
+     echo '*Modifying ./tutorial*/build.sh'
+     echo 'Replacing ImageMagick++ with ImageMagick'
+     sed -i 's/ImageMagick++/ImageMagick/g' ./tutorial*/build.sh
+     echo 'Prepending `Magick++-config --cxxflags --cppflags` to compile command'
+     sed -i 's/$CC tutorial/$CC `Magick++-config --cxxflags --cppflags` tutorial/g' ./tutorial*/build.sh
+     echo 'Appending `Magick++-config --ldflags --libs` to compile command'
+     sed -i '/tutorial.. `/!s/-o tutorial../& `Magick++-config --ldflags --libs`/g' ./tutorial*/build.sh
+fi
 
 echo
 echo '*Modifying ./Include/ogldev_texture.h'
