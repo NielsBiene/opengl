@@ -4,9 +4,9 @@ echo 'OpenGl tutorial for Ubuntu Linux, Arch Linux, Void Linux'
 echo
 echo 'I came accross a very good OpenGl tutorial from Etay Meiri: https://ogldev.org/'
 echo 'This file makes the tutorial compatible to your Linux version. I have many Nix packages installed on my system and I hope this script includes everything for plain Distro users.'
-echo 'Due to my old graphics card I get errors at tutorial 50... using vulkan. In Ubuntu you might want to use the original install script instead.'
-echo 'Please edit this file as you whish before running.'
-echo 'A package manager update is recommended before running this script, i.e. apt update, pacman -Syu, xbps.'
+echo 'Due to my old graphics card I get errors at tutorial 50... using vulkan. Ubuntu includes vulkan header files, in Void they are installed by this script. Arch has a corrupt vulkan-headers package right now, install it manually if required. In Ubuntu you might want to use the original install script instead, but the by this script generated tutorial-start.sh files might help.'
+echo 'Please edit this file as you whish before running. Start this file with bash install_ogldev.org.sh to avoid problems at least in Void Linux.'
+echo 'A package manager update is recommended before running this script, i.e. apt update, pacman -Syu, xbps-install -Su'
 echo
 printf "To start a compiled tutorial execute this command: "
 printf "\e[31m" #RED
@@ -58,10 +58,10 @@ cd ogldev-source
 #echo "zip -r ogldev-source ogldev-source"
 #zip -r ogldev-source ogldev-source
 if grep -q -wi archlinux /proc/version; then
-   echo 'Setting up OGLDEV for Arch Linux' && 	sudo pacman -S --needed make gcc glew freeglut assimp imagemagick glfw-x11 mesa-demos # mesa-demos for glxinfo to check your glx version
+   echo 'Setting up OGLDEV for Arch Linux' && 	sudo pacman -S --needed make gcc glew freeglut assimp imagemagick glfw-x11 mesa-demos #vulkan-headers # mesa-demos for glxinfo to check your glx version
 fi 
 if grep -q -wi voidlinux /proc/version; then
-   echo 'Setting up OGLDEV for Void Linux' && 	sudo make gcc xbps-install glew-devel libfreeglut-devel assimp libassimp-devel ImageMagick libmagick-devel pkg-config glfw-devel glxinfo #xf86-video-intel
+   echo 'Setting up OGLDEV for Void Linux' && 	sudo xbps-install make gcc glew-devel libfreeglut-devel assimp libassimp-devel ImageMagick libmagick-devel pkg-config glfw-devel glxinfo Vulkan-Headers
 fi 
 if grep -q -wi nixoslinux /proc/version; then
    echo 'Setting up  OGLDEV for Nixos Linux' && echo 'not implemented' && break
