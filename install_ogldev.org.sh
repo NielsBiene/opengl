@@ -59,7 +59,7 @@ cd ogldev-source
 #zip -r ogldev-source ogldev-source
 if grep -q -E -wi 'archlinux|manjaro' /proc/version; then
    echo 'Setting up OGLDEV for Arch Linux/Manjaro' && 	sudo pacman -S --needed make gcc glew freeglut assimp imagemagick glfw-x11 mesa-demos #vulkan-headers # mesa-demos for glxinfo to check your glx version
-fi 
+fi
 if grep -q -wi voidlinux /proc/version; then
    echo 'Setting up OGLDEV for Void Linux' && 	sudo xbps-install make gcc glew-devel libfreeglut-devel assimp libassimp-devel ImageMagick libmagick-devel pkg-config glfw-devel glxinfo Vulkan-Headers
 fi 
